@@ -5,7 +5,7 @@ const app = express()
 
 // Fazendo a conexão  
 const mongoose = require('mongoose')
-const connectionString = 'mongodb+srv://zack:<minhaSenha>@cluster0.awk2a.mongodb.net/BASEDEDADOS?retryWrites=true&w=majority'
+const connectionString = 
 
 mongoose.connect(connectionString)
     .then(() => {
