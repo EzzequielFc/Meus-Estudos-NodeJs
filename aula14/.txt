@@ -1,0 +1,1 @@
+mongodb+srv://zack:<password>@cluster0.awk2a.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
