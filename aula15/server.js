@@ -5,7 +5,7 @@ const app = express()
 
 // Fazendo a conexão  
 const mongoose = require('mongoose')
-const connectionString = 'mongodb+srv://zack:senha@cluster0.awk2a.mongodb.net/BASEDEDADOS?retryWrites=true&w=majority'
+const connectionString = 
 
 mongoose.connect(connectionString)
     .then(() => {
@@ -15,24 +15,12 @@ mongoose.connect(connectionString)
     })
     .catch(e => console.log(e))
 
-    // Configurando as sessions
-const session = require('express-session')
+// Chamar a Session
+const session = require('express-session') // Salva a seção na memoria
 const MongoStore = require('connect-mongo')(session)
 const flash = require('connect-flash')
 
-const sessionOptions = session({
-    secret: 'sfndslkfdsf',
-    store: new MongoStore({ mongooseConnection: mongoose.connection}),
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7,
-        httpOnly: true
-    }
-})
 
-app.use(sessionOptions)
-app.use(flash())
 
 // Só irá executar, quando for conectado a base de dados
 app.on('pronto', () => {
@@ -49,6 +37,22 @@ app.use(express.urlencoded({ extended: true }))
 
 // Conteudo Estático
 app.use(express.static(path.resolve(__dirname, 'public')))
+
+
+// Configurar a Session
+const sessionOptions = session({
+    secret: 'olaissoesecreto',
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        httpOnly: true
+    }
+})
+
+app.use(sessionOptions)
+app.use(flash())
 
 // HTML
 app.set('views', path.resolve(__dirname, 'src', 'views')) // Caminho absoluto
